@@ -1,0 +1,259 @@
+<!--<!DOCTYPE html>
+<html>
+    
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>-->
+
+{% extends 'base_event.html' %}
+    
+{% block content %}
+
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        /*background-color: #779199;*/
+        /*color: #ffffff;*/
+    }
+
+    .vh-100{
+        width:100vw; 
+        max-width:100%; 
+        height: 100vh;
+        position: absolute;
+    }
+
+    .row .d-flex .align-items-center .justify-content-center .h-100 {
+        width: 100px;
+        margin-top: auto;
+        margin-bottom: auto;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);	
+    }
+
+    .form-control {
+        width: 400px;
+    }
+
+    .titleform {
+        width: 200px;
+        height: auto;
+        border:2px solid black;
+    }
+
+
+
+
+    /*.col-md-7.col-lg-5.col-xl-5.offset-xl-1{ renovacion 
+        position: relative;
+        background-color: #779799;
+        padding:10px;
+        top: 15px;
+        /*border: 1px skyblue;*/
+        /*border-style: dashed;
+        height: 100%;
+        min-width: auto;
+        max-width: 500px;
+
+    }*/
+
+    .form-check{
+        right:45px;
+        position: relative;
+    }
+
+    /*.col-md-8.col-lg-7.col-xl-6 { 
+        position: relative;
+        background-color: #779799;
+        padding: 40px;
+        top: 10px;
+        height: 80%;
+        width: 15px
+        /*border: 1px solid black;*/
+        /*border-style: dashed;
+    }*/
+
+    .btn.btn-secondary {
+        /*padding:5px;*/
+        width: 200px;
+        float: center
+    }
+
+</style>
+
+{% if submitted %}
+    <h2>Renovacion aplicada al empleado!!</h2>
+{% else %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <section>
+        <div class="container py-5 h-100" position="relative" style="float: left;">
+        </br>
+        <center>
+            <div class="row d-flex align-items-center justify-content-center h-100" >
+                </br>
+                <!--<div class="titleform">
+                    <b> Renueve el contrato del empleado </b>
+                </div>-->
+                </br>
+                <div class="col-auto">
+                    {{ form.non_field_errors }}
+                    <div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Empleado</div>
+                            </div>
+                            <b>{{ form.Empleados }}</b>
+                        </div>
+                        <b>{{ form.Empleados.errors }}</b>
+                    </div>
+                    </br>
+                    <div>
+                        <!--<label class="another-boostrap-class">Selecciona la modalidad:</label>-->
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Modalidad</div>
+                            </div>
+                            <b>{{ form.modalidad }}</b>
+                        </div>
+                        <b>{{ form.modalidad.errors }}</b>
+                    </div>
+                    </br>
+                    <div>
+                        <!--<label class="another-boostrap-class">Correlativo</label>-->
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Correlativo</div>
+                            </div>
+                            <b>{{ form.correlativo }}</b>
+                        </div>
+                        <b>{{ form.correlativo.errors }}</b>
+                    </div>
+                    </br>
+                    <div>
+                        <!--<label class="another-boostrap-class">Plazo de renovacion</label>-->
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Plazo renovacion</div>
+                            </div>
+                            <b>{{ form.plazo_renovacion }}</b>
+                        </div>
+                        <b>{{ form.plazo_renovacion.errors }}</b>
+                    </div>
+                    </br>
+                    <div>
+                        <!--<label class="another-boostrap-class">Motivo de cese</label>-->
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Motivo de cese</div>
+                            </div>
+                            <b>{{ form.motivo_cese}}</b>
+                        </div>
+                        <b>{{ form.motivo_cese.errors }}</b>
+                    </div>
+                    <!--<div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">fecha_renovacion</div>
+                            </div>
+                            <b>{{ form.fecha_renovacion}}</b>
+                        </div>
+                        <b>{{ form.fecha_renovacion.errors }}</b>
+                    </div>-->
+                    </br>
+                    {% for group in request.user.groups.all %}
+                        {% if group.name == 'usuarios' %}
+                        <div>
+                            <!--<label class="another-boostrap-class">Escriba algun comentario</label>-->
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Comentario</div>
+                                </div>
+                                <b>{{ form.comentario }}</b>
+                            </div>
+                            <b>{{ form.comentario.errors }}</b>
+                        </div>
+                        </br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-2" >
+                        <input type="submit" value="Renovar" class="btn btn-secondary">
+                    </div>
+                </div>
+            </div>
+        </center>
+        </div>
+    </section>
+</form>
+{% endif %}
+
+{% endblock %} 
+
+<!--<script>
+
+    var var_name = "{{ database.name }}";
+    document.getElementById("Empleadoname").value = var_name;
+
+</script>-->
+
+<!--<div>
+    <label class="another-boostrap-class">Selecciona la modalidad:</label>
+    </br>
+    <b>{{ form.modalidad }}</b>
+    <b>{{ form.modalidad.errors }}</b>
+</div>-->
+
+
+<!--<div class="col-md-8 col-lg-7 col-xl-6" >
+    <label> Ficha de datos del Empleado </label>
+    <div class="col-auto">
+        <div>
+            <label class="another-boostrap-class">Nombre del empleado:</label>
+            </br>
+            <b>{{ name_emp }}</b>
+        </div>
+        <div>
+            <label class="another-boostrap-class">Correo del empleado:</label>
+            </br>
+            <b>{{ empemail_emp }}</b>
+        </div>
+        <div>
+            <label class="another-boostrap-class">Posicion en la empresa:</label>
+            </br>
+            <b>{{ bmpposition_emp }}</b>
+        </div>
+        <div>
+            <label class="another-boostrap-class">Nombre del jefe:</label>
+            </br>
+            <b>{{ bossname_emp }}</b>
+        </div>
+        <div>
+            <label class="another-boostrap-class">Correo del jefe:</label>
+            </br>
+            <b>{{ bossmail_emp}}</b>
+        </div>
+        <div>
+            <label class="another-boostrap-class">Fecha Inicio de contrato:</label>
+            </br>
+            <b>{{ contractstartdate }}</b>
+        </div>
+        <div>
+            <label class="another-boostrap-class">Fecha final del contrato:</label>
+            </br>
+            <b>{{ contractenddate }}</b>
+        </div>
+    </div>
+</div>-->

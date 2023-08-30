@@ -1,0 +1,316 @@
+{% extends 'base_main.html' %}
+
+{% block content %}
+
+{% if request.user.is_staff %}
+
+<style>
+
+    .row .col-sm-6 .bg-white .selectBox {
+        text-align: center;
+
+    }
+
+    .row .col {
+        padding-bottom: 1em;
+    }
+
+    .row .col-sm-6 .bg-white .selectBox select{
+        text-align: center;
+        appearance: none;
+        width: 50%;
+        height: 3em;
+        /*border-radius: 50px;*/
+        outline: none;
+        padding-inline: 1em;
+        align-items: center;
+        grid-area: select;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 0.8em;
+        color: #535353;
+        /*background: linear-gradient(145deg, #7abecc, 
+        #fafafa);
+        /*box-shadow: 10px 10px 20px #a4a4a4,
+        -10px -10px 20px #ffffff;*/
+    }
+</style>
+<div class="main-content-container container-fluid px-4">
+    {% include 'status.html' %}
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
+            <div class="card card-small">
+                <div class="card-header border-bottom">
+                    <h6 class="m-0"> Empleados por area </h6>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row border-bottom py-2 bg-light">
+                        <!--<div class="col-12 col-sm-6">    
+                            <select class="form-select" id="area">
+                                <option selected="disabled"></option>
+                                {% for item in empsearch %}
+                                <option value= "{{ item.num_empleados }}">{{ item.bunit }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>-->
+                        <div class="chartBox">
+                            <canvas id="myChart1" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card card-small h-100">
+              <div class="card-header border-bottom">
+                <h6 class="m-0"> Contratos por Area </h6>
+              </div>
+              <div class="card-body py-0">
+                <canvas id="myChart" height="220"></canvas>
+              </div>
+              <div class="card-footer border-top">
+                <div class="row">
+                  <div class="col">
+                    <select class="form-select" id="status">
+                        <option value = " " selected disabled> ----- </option>
+                        {% for item in queryset %}
+                        <option value = " {{ item.st_vig }},{{ item.st_pven }},{{ item.st_venc }} "> {{ item.bunit }} </option>
+                      <!--<option value = "1,6,2"> Opcion 2 </option>-->
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        </br>
+        <div class = "col-lg-8 col-md-12 col-sm-12 mb-4">
+            <div class="bg-white">
+                <div class="chartBox">
+                    <canvas id="myChart3" width="500" height="500"></canvas>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<!--<div class="row">
+    <div class="col-sm-6">
+        <div class="selectBox"> 
+            <select onchange='this.size=1; this.blur();' class="form-select" id="Empleados" >
+                {% for item in empsearch %}
+                <option value= " item.num_name">{{ item.bunit }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="chartBox">
+            <canvas id="myChart1" width="800" height="400"></canvas>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="chartBox">
+            <canvas id="myChart" width="200" height="200"></canvas>
+        </div>
+    </div>
+</div>
+</br>-->
+<!--<div class="row">
+    <div class="col-sm-8">
+        <div class="bg-white">
+            <div class="chartBox">
+                <canvas id="myChart2" width="350" height="450"></canvas>
+            </div>
+        </div>
+    </div>
+</div>-->
+</div>
+
+<!--STATUS-->
+<!--Grafica Numero de empleados x area-->
+
+<script>
+const data={
+    labels: [{% for stat in all_status %} '{{stat|safe}}', {% endfor %}],
+    datasets: [{
+        label: [ ],
+        data: [ ],
+        backgroundColor: [
+            /*'rgba(54, 162, 235, 0.2)',*/
+            'rgba(140, 226, 144, 0.9)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 99, 132, 0.2)'
+        ],
+        borderColor: [
+        'rgba(140, 226, 144, 0.9)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(255, 99, 132, 1)'
+        ],
+        borderWidth: 2
+    }]
+};
+
+const config = {
+    type: 'doughnut',
+    data: data,
+    options: {
+        responsive: true,
+        plugins: {
+            legend:{
+                position:'bottom',
+            },
+            titles:{
+                displayed: true,
+                text:'#Contratos/status'
+            }
+        }
+
+    }
+};
+const myChart = new Chart(document.getElementById('myChart'), config);
+
+const data2 = {
+    labels: [{% for n in graph_mon %} '{{n|safe}}', {% endfor %}],
+    datasets: [{
+        label: 'Renovaciones por mes',
+        data: {{ count_renov }},
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+    }]
+};
+
+const config2 = {
+  type: 'line',
+  data: data2,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+};
+
+const myChart1 = new Chart(document.getElementById('myChart1'), config2);
+
+const data3 = {
+    labels: [{% for bunit in all_bunit %} '{{bunit|safe}}', {% endfor %}],
+    datasets: [{
+        label: 'Vigentes',
+        data: [1,4,5,,3,2,4,2],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+    },{
+        label: 'Vencidos',
+        data: [1,4,5,,3,2,4,2],
+        backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+            'rgba(75, 192, 192, 1)',
+        ],
+        borderWidth: 1
+    },{
+        label: 'Por vencer',
+        data: [1,4,5,,3,2,4,2],
+        backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+            'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 1
+    }]
+};
+
+const config3 = {
+    type: 'bar',
+    data: data3,
+    options: {  
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    stacked:true,
+                },
+                y:{
+                    stacked:true,
+                }
+            }
+        }
+    };
+
+const myChart3 = new Chart(document.getElementById('myChart3'),config3);
+
+const status = document.getElementById('status');
+
+status.addEventListener('change', select2);
+
+function select2(){
+    console.log(status.value.split(','));
+    myChart.data.datasets[0].data = status.value.split(',');
+    myChart.update();
+}
+
+</script>
+
+{% else %}
+
+<h4> Usuario </h4>
+
+<div class="main-content-container container-fluid px-4">
+    </br>
+    <div class="row">
+    	<div class="col-md-3">
+    		<div class="card text-right text-white  mb-3"  id="personas" position="relative">
+    		  	<div class="card-header" >
+    		  		<h5 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-person"></i> &nbsp; Total de empleados</h5>
+                    <!--<h6 class="card-title" style = "color: black" position="absolute">#total de empleados</h6>-->
+    		  	</div>
+    		  	<div class="card-body" position="relative">
+    		    	<h3 class="card-title" style = "color: black" position="absolute">{{ count_usuario }}</h3>
+    				<!--<h6 class="card-title" style = "color: black" position="absolute">#total de empleados</h6>-->
+    		  	</div>
+    		</div>
+    	</div>
+    	<div class="col-md-3">
+    		<div class="card text-right text-white  mb-3" id="personas" position="relative">
+    		  	<div class="card-header">
+    		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-user-tie"></i> &nbsp; Contratos vigentes </h6>
+    		  	</div>
+    		  	<div class="card-body" position="relative">
+    		    	<h3 class="card-title" style = "color: black" position="absolute">{{ usuario_contrvign }}</h3>
+    				<!--<h6 class="card-title" style = "color: black" position="absolute">Total de contratos renovados</h6>-->
+    		  	</div>
+    		</div>
+    	</div>
+    	<div class="col-md-3">
+    		<div class="card text-right text-white  mb-3" id="personas" position="relative">
+    		  	<div class="card-header">
+    		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-building"></i> &nbsp; Contratos por vencer </h6>
+    		  	</div>
+    		  	<div class="card-body">
+    		    	<h3 class="card-title" style = "color: black" position="absolute">{{ usuario_contrpven }}</h3>
+    				<!--<h6 class="card-title" style = "color: black" position="absolute"> #total de colaboradores</h6>-->
+    		  	</div>
+    		</div>
+    	</div>
+    	<div class="col-md-3">
+    		<div class="card text-right text-white  mb-3"  id="personas" poistion="relative">
+    		  	<div class="card-header">
+    		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-building"></i> &nbsp; Contratos vencidos</h6>
+    		  	</div>
+    		  	<div class="card-body">
+    		    	<h3 class="card-title" style = "color: black" position="absolute">{{ usuario_contrvenc }}</h3>
+    		  	</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base_main.html' %}
+    
+{% block content %}
+
+{% load templatetag %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+        <!--<p id="message">{{ message }} </p>-->
+    {% endfor %}
+{% endif %}
+
+</br>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-auto">
+            <!--<label class="form-label" for="autoSizingSelect"> </label>-->
+            <select class="form-select" name="actionname">
+                <!--<option selected disabled=true>Seleccione una opcion</option>-->
+                <option value="delete"> Eliminar </option>
+                <option selected> ... </option>
+                <!--<option value="no_action"> ----- </option>-->
+            </select>
+        </div>
+        <div class="col-auto">
+                <button class="btn btn-secondary" type="sumbit" name="action"> Aplicar </button>
+        </div>
+    </div>
+    
+    </br>
+    <table class="table table-condensed table-striped" style="height: 100%;
+                                                       width: 100%;
+                                                       margin: 0;
+                                                       padding: 0;
+                                                       border: 1px solid black">
+        <thead>
+            <tr>
+                <th style="vertical-align: middle; 
+                    text-align: center"> Nombre del empleado </th>
+                <th style="vertical-align: middle;
+                    text-align: center"> Nombre del aprobador </th>
+                <th style="vertical-align: middle;
+                    text-align: center"> Editar renovacion realizada </th>
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'admin' %}
+                <th style="vertical-align: middle;
+                    text-align: center"> Editar recursos humanos </th>
+                <!--<th> Eliminar </th>-->
+                <th>
+                    <div class="form-check form-check-inline">
+                        <label class="form-label" for="autoSizingSelect"></label>
+                        <input class="form-check-input" type="checkbox">
+                    </div> 
+                </th>
+                {% endif %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody class="panel"><!--data-->
+            {% for item in pagination %}
+            <tr>
+                <td style="vertical-align: middle;
+                    text-align: center">{{ item.Empleados }}</td>
+                <td style="vertical-align: middle;
+                text-align: center">{{ item.Empleados.bossname }}</td>
+                <td style="vertical-align: middle;
+                    text-align: center"><a href = "{% url 'actualizarrenovacion' item.id %}" class="btn btn-outline-secondary btn-sm"> Editar </a></td>
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'admin' %}
+                <td style="vertical-align: middle;
+                    text-align: center"><a href = "{% url 'actualizarporrrhh' item.id %}" class="btn btn-outline-secondary btn-sm"> Editar RRHH</a></td>
+                {% endif %}
+                {% endfor %}
+                <td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="{{ item.id }}" name="idcheckbox">
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                {% if pagination.has_previous %}
+                <!--<li class="page-item"><a class="page-link" href="?page=1">&laquo Primero </a></li>-->
+                <li class="page-item"><a class="page-link" href="{% my_url pagination.previous_page_number 'page' request.GET.urlencode %}"> Anterior </a></li>
+                <!--<li class="page-item"><a class="page-link" href="?page={{ pagination.previous_page_number }}"> &laquo </a></li>-->
+                {% endif %}
+                {% for i in nums %}
+                    <li class="page-item"><a class="page-link" href ="{% my_url i 'page' request.GET.urlencode %}">{{ forloop.counter }}</a></li>
+                    <!--<li class="page-item"><a class="page-link" href ="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>-->
+                {% endfor %}
+                {% if pagination.has_next %}
+                    <!--<li class="page-item"><a class="page-link" href="?page={{ pagination.next_page_number }}"> &raquo </a></li>-->
+                    <li class="page-item"><a class="page-link"  href="{% my_url pagination.next_page_number 'page' request.GET.urlencode %}"> Continúe </a></li>
+                    <!--<li class="page-item"><a class="page-link" href="?page={{ pagination.paginator.num_pages }}"> Ultimo &raquo </a></li>-->
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+</form> 
+
+{% endblock %}

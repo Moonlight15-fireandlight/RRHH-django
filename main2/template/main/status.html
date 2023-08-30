@@ -1,0 +1,190 @@
+<br>
+<!--<div class="row">
+	<div class="col-lg col-md-6 col-sm-6 mb-4">
+		<div class="stats-small stats-small--1 card card-small">
+		  	<div class="card-body p-0 d-flex">
+				<div class="d-flex flex-column m-auto">
+					<div class="stats-small__data text-center">
+					<span class="stats-small__label text-uppercase"><i class="fa-solid fa-person"></i></span>
+					<h6 class="stats-small__value count my-3">{{ num_empleados }}</h6>
+			  		</div>
+			  	<div class="stats-small__data">
+					<span class="stats-small__percentage stats-small__percentage--increase">Total de empleados</span>
+				</div>
+				</div>
+			<canvas height="120" class="blog-overview-stats-small-1"></canvas>
+		  	</div>
+		</div>
+	</div>
+	<div class="col-lg col-md-6 col-sm-6 mb-4">
+		<div class="stats-small stats-small--1 card card-small">
+		  <div class="card-body p-0 d-flex">
+			<div class="d-flex flex-column m-auto">
+			  <div class="stats-small__data text-center">
+				<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-user-tie"></i> &nbsp; Total contratos renovados</h6>
+				<h6 class="stats-small__value count my-3">{{ contr_renovad }}</h6>
+			  </div>
+			  <div class="stats-small__data">
+				<span class="stats-small__percentage stats-small__percentage--increase">Coemntario</span>
+			  </div>
+			</div>
+			<canvas height="120" class="blog-overview-stats-small-2"></canvas>
+		  </div>
+		</div>
+	  </div>
+	  <div class="col-lg col-md-4 col-sm-6 mb-4">
+		<div class="stats-small stats-small--1 card card-small">
+		  <div class="card-body p-0 d-flex">
+			<div class="d-flex flex-column m-auto">
+			  <div class="stats-small__data text-center">
+				<span class="stats-small__label text-uppercase">Comments</span>
+				<h6 class="stats-small__value count my-3">8,147</h6>
+			  </div>
+			  <div class="stats-small__data">
+				<span class="stats-small__percentage stats-small__percentage--decrease">3.8%</span>
+			  </div>
+			</div>
+			<canvas height="120" class="blog-overview-stats-small-3"></canvas>
+		  </div>
+		</div>
+	  </div>
+	  <div class="col-lg col-md-4 col-sm-6 mb-4">
+		<div class="stats-small stats-small--1 card card-small">
+		  <div class="card-body p-0 d-flex">
+			<div class="d-flex flex-column m-auto">
+			  <div class="stats-small__data text-center">
+				<span class="stats-small__label text-uppercase">Users</span>
+				<h6 class="stats-small__value count my-3">2,413</h6>
+			  </div>
+			  <div class="stats-small__data">
+				<span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+			  </div>
+			</div>
+			<canvas height="120" class="blog-overview-stats-small-4"></canvas>
+		  </div>
+		</div>
+	  </div>
+</div>-->
+	
+<div class="row">
+	<div class="col-md-3">
+		<div class="card text-right text-white  mb-3"  id="personas" position="relative">
+		  	<div class="card-header" >
+		  		<h5 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-person"></i> &nbsp; Total de empleados</h5>
+                <!--<h6 class="card-title" style = "color: black" position="absolute">#total de empleados</h6>-->
+		  	</div>
+		  	<div class="card-body" position="relative">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ num_empleados }}</h3>
+				<!--<h6 class="card-title" style = "color: black" position="absolute">#total de empleados</h6>-->
+		  	</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card text-right text-white  mb-3" id="personas" position="relative">
+		  	<div class="card-header">
+		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-user-tie"></i> &nbsp; Contratos vigentes </h6>
+		  	</div>
+		  	<div class="card-body" position="relative">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ contr_vigente }}</h3>
+				<!--<h6 class="card-title" style = "color: black" position="absolute">Total de contratos renovados</h6>-->
+		  	</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card text-right text-white  mb-3" id="personas" position="relative">
+		  	<div class="card-header">
+		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-building"></i> &nbsp; Contratos por vencer </h6>
+		  	</div>
+		  	<div class="card-body">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ contr_porvencer }}</h3>
+				<!--<h6 class="card-title" style = "color: black" position="absolute"> #total de colaboradores</h6>-->
+		  	</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card text-right text-white  mb-3"  id="personas" poistion="relative">
+		  	<div class="card-header">
+		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-building"></i> &nbsp; Contratos vencidos</h6>
+		  	</div>
+		  	<div class="card-body">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ contr_vencidos }}</h3>
+		  	</div>
+		</div>
+	</div>
+</div>
+
+
+<!--<div class="col-md-3">
+		<div class="card text-right text-white  mb-3"  id="personas" position="relative">
+		  	<div class="card-header" >
+		  		<h5 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-person"></i> &nbsp; Total de empleados</h5>
+                <h6 class="card-title" style = "color: black" position="absolute">#total de empleados</h6>
+		  	</div>
+		  	<div class="card-body" position="relative">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ num_empleados }}</h3>
+				<h6 class="card-title" style = "color: black" position="absolute">#total de empleados</h6>
+		  	</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card text-right text-white  mb-3" id="personas" position="relative">
+		  	<div class="card-header">
+		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-user-tie"></i> &nbsp; Total contratos renovados</h6>
+		  	</div>
+		  	<div class="card-body" position="relative">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ contr_renovad }}</h3>
+				<h6 class="card-title" style = "color: black" position="absolute">Total de contratos renovados</h6>
+		  	</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card text-right text-white  mb-3" id="personas" position="relative">
+		  	<div class="card-header">
+		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-building"></i> &nbsp; Total de colaboradores</h6>
+		  	</div>
+		  	<div class="card-body">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ num_jefes }}</h3>
+				<h6 class="card-title" style = "color: black" position="absolute"> #total de colaboradores</h6>
+		  	</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="card text-center text-white  mb-3"  id="personas" poistion="relative">
+		  	<div class="card-header">
+		  		<h6 class="card-title" style = "color: black" position="absolute"><i class="fa-solid fa-building"></i> &nbsp; Total de colaboradores</h6>
+		  	</div>
+		  	<div class="card-body">
+		    	<h3 class="card-title" style = "color: black" position="absolute">{{ num_jefes }}</h3>
+		  	</div>
+		</div>
+	</div>
+
+</div>-->
+
+        <!--<div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="total-vencidos">
+                    <div class="card-header">
+                        <h5 class="card-title">total de contratos vencidos</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="total-expirar">
+                    <div class="card-header">
+                        <h5 class="card-title">Contratos por expirar </h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->

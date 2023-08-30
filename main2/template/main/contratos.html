@@ -1,0 +1,154 @@
+{% extends 'base_main.html' %}
+    
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% load templatetag %}
+
+<style>
+    
+
+
+</style>
+
+
+</br>
+    <form method="get" action="{% url 'contratos' %}">
+        {% csrf_token %}
+        <div class="row">
+            <!--{% for x in filter %}
+            <select name = "bunit">
+                <option value = "{{x.bunit}}" >{{ myFilter.form.bunit }}</option>
+            </select>
+            {% endfor %}-->
+            <div class="col-auto">
+                <label for ="{{ filter.form.bunit.id_for_label}}" class="another-boostrap-class"> Area </label>
+            </br>
+                {{myFilter.form.bunit}}
+            </div>
+            {% for group in request.user.groups.all %}
+                {% if group.name == 'admin' %}
+                <div class="col-auto">
+                    <label for ="{{ filter.form.bossname.id_for_label}}" class="another-boostrap-class"> Colaborador</label>
+                </br>
+                    {{myFilter.form.bossname}}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <div class="col-auto">
+                <label for ="{{ filter.form.status.id_for_label}}" class="another-boostrap-class">Estatus del contrato</label>
+            </br>
+                {{myFilter.form.status}}
+            </div>
+            <div class="col-auto">
+                <label for ="{{ filter.form.contractstartdate.id_for_label}}" class="another-boostrap-class" >Fecha inicial del contrato</label>
+            </br>
+                {{myFilter.form.contractstartdate}}
+            </div>
+            <div class="col-auto">
+                <label for ="{{ filter.form.contractenddate.id_for_label}}" class="another-boostrap-class" >Fecha final del contrato</label>
+            </br>
+                {{myFilter.form.contractenddate}}
+            </div>
+            <div class="col-auto">
+            </br>
+                <button type="submit" class="btn btn-secondary" >Buscar</button>
+                <a href="{% url 'renovar' %}" class="btn btn-primary"> Renovar contrato </a>
+                <!--filtrar-->
+            </div>
+        </div>
+        <!--<div class="row align-items-start" >
+            <div class="col-auto">
+                <label for ="{{ filter.form.contractstartdate.id_for_label}}" class="another-boostrap-class" >Fecha Inicio</label>
+                {{myFilter.form.contractstartdate}}
+            </div>
+            <div class="col-auto">
+                <label for ="{{ filter.form.contractenddate.id_for_label}}" class="another-boostrap-class" >Fecha Fin</label>
+                {{myFilter.form.contractenddate}}
+            </div>
+        </div>-->
+    <table class="table table-condensed table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dni/Carnet</th>
+                <th>Fecha de ingreso</th>
+                <th>Gerencia</th>
+                <th>Área</th>
+                <th>Nombre del aprobador</th>
+                <th>Estado de la renovacion</th>
+                <th>Estatus</th>
+                <!--<th>
+                    <div class="form-check form-check-inline">
+                        <label class="form-label" for="autoSizingSelect"></label>
+                        <input class="form-check-input" type="checkbox">
+                    </div>
+                </th>-->
+            </tr>
+        </thead>
+        <tbody class="panel">
+            {% for item in pagination %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ item.bunit }}</td>
+                <td>{{ item.bossname }}</td>
+                <td>{{ item.statusrenovacion|default_if_none:" " }}</td>
+                {% if item.status == "Vigente" %}
+                <td style="color:green"><strong>{{item.status}}</strong></td>
+                {% elif item.status == "Por Vencer" %}
+                <td style="color:rgb(255,111,0);"><strong>{{item.status}}</strong></td>
+                {% else %}
+                <td style="color:red"><strong>{{item.status}}</strong></td>
+                {% endif %}
+                <!--variable foreignkey-->
+                <!--<td> {{ item.status }} </td>-->
+                <!--<td style="color:rgb(17, 42, 199)"><strong>{{item.control_status}}</strong></td>-->
+                <!--<td>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="{{ tab.id }}" name="idcheckbox">
+                    </div>
+                </td>-->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                {% if pagination.has_previous %}
+                    <!--<li class="page-item"><a class="page-link" href="?page=1">&laquo Primero </a></li>-->
+                    <li class="page-item"><a class="page-link" href="{% my_url pagination.previous_page_number 'page' request.GET.urlencode %}"> &laquo </a></li>
+                    <!--<li class="page-item"><a class="page-link" href="?page={{ pagination.previous_page_number }}"> &laquo </a></li>-->
+                {% endif %}
+                {% for i in nums %}
+                    <li class="page-item"><a class="page-link" href ="{% my_url i 'page' request.GET.urlencode %}">{{ forloop.counter }}</a></li>
+                    <!--<li class="page-item"><a class="page-link" href ="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>-->
+                {% endfor %}
+                <!--<li class="page-item"><a class="page-link" href="?page=1"> 1 </a></li>
+                <li class="page-item"><a class="page-link" href="?page=2"> 2 </a></li>
+                <li class="page-item"><a class="page-link" href="?page=3"> 3 </a></li>-->
+                {% if pagination.has_next %}
+                    <!--<li class="page-item"><a class="page-link" href="?page={{ pagination.next_page_number }}"> &raquo </a></li>-->
+                    <li class="page-item"><a class="page-link"  href="{% my_url pagination.next_page_number 'page' request.GET.urlencode %}"> &raquo </a></li>
+                    <!--<li class="page-item"><a class="page-link" href="?page={{ pagination.paginator.num_pages }}"> Ultimo &raquo </a></li>-->
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    <!--{% if pagination.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo Primero </a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ pagination.previous_page_number }}"> Anterior </a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href ="#" >Pagina {{pagination.number}} del total de: {{pagination.paginator.num_pages}}</a></li>
+    {% if pagination.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ pagination.next_page_number }}"> Siguiente </a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ pagination.paginator.num_pages }}"> Ultimo &raquo </a></li>
+    {% endif %}-->
+    </form>
+{% endif %}
+
+{% endblock %} 

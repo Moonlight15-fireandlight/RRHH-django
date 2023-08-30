@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+
+		.vh-100{
+			width:100vw; 
+        	max-width:100%; 
+        	height: 100vh;
+			position: absolute;
+		}
+
+		.row .d-flex .align-items-center .justify-content-center .h-100 {
+			width: 100px;
+			margin-top: auto;
+			margin-bottom: auto;
+			position: absolute;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);	
+		}
+
+		.col-md-7.col-lg-5.col-xl-5.offset-xl-1{
+			position: relative;
+		}
+
+		.form-check{
+            right:45px;
+			position: relative;
+        }
+
+		.btn.btn-primary.btn-lg.btn-block{
+			/*width: 100%;*/
+			position: relative;
+			height: 50px;
+			width: 150px;
+			background: #33ccff ;
+			color: white;
+			border: #33ccff;
+		}
+
+		.btn.btn-primary.btn-lg.btn-block:focus{
+			box-shadow: none;	
+			outline: 0px;
+        }
+
+		.col-md-8.col-lg-7.col-xl-6 {
+			position: relative;
+			padding: 10px;
+			top: 30px;
+		}
+
+</style>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                    class="img-fluid" alt="Phone image">
+            </div>
+            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <center><img class="about-electrodata"
+                    src="https://media-exp1.licdn.com/dms/image/C4E0BAQGC7KmKWtJF7g/company-logo_200_200/0/1644864147238?e=2147483647&v=beta&t=f57lo8WBLzpxQxCJ6JeQ93w-eTlaAuf-NrHiZRzfGnw"
+                    alt="Electrodata"></center>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" name="username" class="form-control form-control-lg" placeholder="Usuario"/>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" name="password" class="form-control form-control-lg" placeholder="Contraseña"/>
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center mb-4">
+                        <!-- Checkbox -->
+						<div class="form-check" >
+							<input class="pt-0" type="checkbox" value="" id="form1Example3" checked />
+							<label class="pt-0" for="form1Example3"> Remember me </label>
+						</div>
+						<div class = "row">
+							<div>
+								<label>  No tienes una cuenta?</label>
+							</div>
+							<div>
+								<a href="{% url 'register' %}" class="ml-1"> Registrar</a>
+							</div>
+						</div>
+                    </div>
+					<!-- Submit button -->
+					<center><button type="submit" class="btn btn-primary btn-lg btn-block">Sig in</button></center>
+				</form>
+				<!--{% for message in messages %}
+					<p id="messages">{{message}}</p>
+				{% endfor %}-->
+            </div>
+        </div>
+    </div>
+</section>
+</html>
+
+    <!-- <center><br/>
+    <h1>LOGIN</h1>
+    </center>
+    <br/>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+        <label class="form-label">Usuario</label>
+        <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <input type="password" class="form-control" name="password"><br>
+        </div>
+        <div>
+        <center><button type="submit" value="Submit" class="btn btn-primary">Submit</button></center>
+        </div>
+    </form> -->

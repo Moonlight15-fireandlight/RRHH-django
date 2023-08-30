@@ -1,0 +1,412 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--<div class="home-content">
+            <i class = "fa-solid fa-bars"></i>
+        </div>-->
+        <a class="navbar-brand" href="{% url 'home' request.user.username%}">RRHH Electrodata</a>
+        <!--<h5 style="background-color:powderblue;">{{request.user}}</h5>-->
+        <div class="nav-item">
+            <a class="btn btn-primary" href="{% url 'logoutuser' %}" role="button">Logout</a>
+        </div>
+        
+        <!--<span style="color:white;">Hola {{request.user.first_name}}</span>-->
+        <style>
+        .container-fluid {
+            position: relative;
+        }
+
+        .nav-item{
+            position: relative;
+            right: 10px;
+        }
+
+        .navbar-brand {
+            position: relative;
+            background-color: rgb(0, 132, 255);
+            margin: 10px;
+            padding: 15px;
+            padding-top: 5x;
+            padding-bottom: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .navbar-brand:hover{
+            background: #353640;
+        }
+
+        .offcanvas.offcanvas-start{
+            height: 100%;
+            width: 260px;
+            
+        }
+
+        .sidebar{
+            position:fixed;
+            top:0;
+            left:0;
+            height: 100%;
+            width: 260px;
+            background: #11101d;
+            transition: all 0.5s ease;
+        }
+
+        .sidebar.close {
+            width: 78px;
+        }
+
+        .sidebar .logo-details{
+            height: 60px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .logo-details i{
+            font-size: 30px;
+            color: #fff;
+            height: 50px;
+            min-width: 78px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+
+        .sidebar .profile-details{
+            position: fixed;
+        }
+
+        .sidebar .profile-details img{
+            height: 52px;
+            width: 52px;
+            object-fit: cover;
+            border-radius: 16 px;
+            margin: 0 14px 0 12px;
+            background: #1d1b31;
+            /*padding: 20px;*/
+        }
+
+        .sidebar .logo-details .logo-name {
+            font-size: 22px;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.3s ease;
+            transition-delay: 0.1s;
+        }
+
+        .sidebar.close .logo-details .logo-name{
+            transition-delay: 0s;
+            opacity: 0;
+            pointer-events: none;
+
+        }
+
+        .sidebar .nav-links{
+            height: 100%;
+            padding-top: 30px 0 150px 0;
+            overflow: auto;
+        }
+
+        .sidebar .nav-links{
+            overflow: visible;
+
+        }
+
+        .sidebar .nav-links::-webkit-scrollbar{
+            display: none;
+        }
+
+        .sidebar .nav-links li{
+            position:relative;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar .nav-links li:hover{
+            background: #1d1b31;
+        }
+
+        .sidebar .nav-links li .iocn-link{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar .nav-links li .iocn-link i{
+            position: relative;
+            right:15px;
+
+        }
+
+        .sdebar .nav-links li .iocn-link span{
+            right: 2px;
+        }
+
+        .sidebar .nav-links li i{
+            height: 50px;
+            min-width: 78px;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .nav-links li.showMenu i.arrow{
+            transform: rotate(-180deg);
+        }
+
+        .sidebar.close .nav-links li.showMenu i.arrow{
+            display: none;
+        }
+        
+        .sidebar .nav-links li a{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-links li a .link_name{
+            font-size: 18px;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .sidebar.close .nav-links li a .link_name{
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar .nav-links li .sub-menu{
+            padding: 6px 6px 14px 80 px;
+            margin-top: -10px;
+            background: #1d1b31;
+            display: none;
+        }
+
+        .sidebar .nav-links li.showMenu .sub-menu{
+            display: block;
+        }
+
+        .sidebar .nav-links li .sub-menu a{
+            color: #fff;
+            font-size: 15px;
+            padding: 5px 0;
+            white-space: nowrap;
+            opacity: 0.6;
+            transition: all 0.5s ease;
+        }
+
+        .sidebar .nav-links li .sub-menu a:hover{
+            opacity: 1;
+        }
+
+        .sidebar.close .nav-links li .sub-menu{
+            position: absolute;
+            left:100%;
+            top: -10px;
+            margin-top: 0;
+            padding: 10px 20px;
+            border-radius: 0 6px 6px 0;
+            opacity: 0;
+            display: block;
+            pointer-events: none;
+            transition: 0s;
+        }
+
+        .sidebar.close .nav-links li:hover .sub-menu{
+            top: 0;
+            opacity: 1;
+            pointer-events: auto;
+            transition: all 0.4s ease;
+        
+        }
+        .sidebar .nav-links li .sub-menu .link_name{
+            display: none;
+        }
+
+
+        .sidebar.close .nav-links li .sub-menu .link_name{
+            font-size: 18px;
+            opacity: 1;
+            display: block;
+        }
+
+        .sidebar .nav-links li .sub-menu.blank{
+            opacity: 1;
+            pointer-events: auto;
+            padding: 3px 20px 6px 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0s;
+        }
+
+        .sidebar .nav-links li:hover .sub-menu.blank{
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+
+        /*.home-section{
+            position: relative;
+            background: #E4E9F7;
+            height: 100vh;
+            left:260px;
+            width: calc(100%-260px);
+            transition: all 0.5 ease;
+        }
+
+        .sidebar.close ~ .home-section{
+            left: 78px;
+            width: calc(100% - 78px);
+
+        }
+
+        .home-section .home-content{
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .home-section .home-content .fa-solid.fa-bars{
+            margin: 0 15px;
+
+        }
+
+        .home-section .home-content .text{
+            color: #11101d;
+            font-size: 35px;
+        }
+
+        .home-section .home-content .text{
+            font-size: 26px;
+            font-weight: 600;
+        }*/
+        </style>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="sidebar">
+            <div class="logo-details">
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <img class = "about-electrodata" src="https://media-exp1.licdn.com/dms/image/C4E0BAQGC7KmKWtJF7g/company-logo_200_200/0/1644864147238?e=2147483647&v=beta&t=f57lo8WBLzpxQxCJ6JeQ93w-eTlaAuf-NrHiZRzfGnw" alt = "Electrodata">
+                        <span class="logo-name"> Electrodata </span>
+                    </div>
+                </div>
+            </div>
+        </br>
+            <ul class="nav-links">
+                <li>
+                    <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="link_name"> Renovacion</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a href = "{% url 'contratos' %}"> Contratos </a></li>
+                        <li><a href="{% url 'total renovaciones' %}"> Renovaciones </a></li>
+                        <!--<li><a href = "{% url 'constancias' %}">Constancias de Trabajo</a></li>-->
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="link_name">Contratos</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a class="link_name" href = "#">ANTAMINA</a></li>
+                        <li><a href = "#">RRHH</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="iocn-link">
+                    <a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="link_name">RRHH</a>
+                    </a>
+                    <!--<ul class="sub-menu blank">
+                        <li><a class="link_name" href = "#">Analytics</a></li>
+                    </ul>-->
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--<section class="home-section">
+            <div class="home-content">
+                <i class = "fa-solid fa-bars"></i>
+                <span class = "text"> Drop Down Sidebar</span>
+            </div>
+        </section>-->        
+        
+        <script>
+
+            let arrow = document.querySelectorAll(".arrow");
+            for (var i=0; i < arrow.length; i++) {
+                arrow[i].addEventListener("click", (e)=>{
+                    let arrowParent = e.target.parentElement.parentElement;
+                    console.log(arrowParent);
+                    arrowParent.classList.toggle("showMenu");
+                });
+            }
+            let sidebar = document.querySelector(".sidebar");
+            /*let sidebarBtn = document.querySelector(".fa-solid.fa-bars");
+            console.log(sidebarBtn);
+            sidebarBtn.addEventListener("click", ()=>{
+                sidebar.classList.toggle("close");
+            });*/
+    
+
+            </script>
+
+    </div>
+    </div>
+</nav>
+
+        <!--<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" >
+            <div class="offcanvas-header">
+                <br/>
+                <img class = "about-electrodata" src="https://media-exp1.licdn.com/dms/image/C4E0BAQGC7KmKWtJF7g/company-logo_200_200/0/1644864147238?e=2147483647&v=beta&t=f57lo8WBLzpxQxCJ6JeQ93w-eTlaAuf-NrHi
+                alt = "Electrodata">
+                <br/>
+                <style>
+                    .about-electrodata{
+                        float: right;
+                        background-position: right;
+                        right: 100px;
+                        height: 100px;
+                        width: 100px;
+                        margin: 20px;
+                    }
+                </style>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" ></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Recursos Humanos
+                        </button>
+                    </h2>.
+                    
+                    
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <a class="dropdown-item" href="{% url 'comisiones' %}">Comisiones</a>
+                            <a class="dropdown-item" href="{% url 'constancias' %}">Constancias de Trabajo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
